@@ -1,7 +1,7 @@
 {
-  "name": "tarot-book",
+  "name": "fools-compass",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "develop:backend": "npm run --prefix backend develop",
     "develop:frontend": "wait-on http://localhost:1337/admin && npm run --prefix frontend develop",

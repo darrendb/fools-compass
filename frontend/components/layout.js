@@ -1,10 +1,12 @@
 import Nav from "./nav"
 
-const Layout = ({ children, categories, seo }) => (
-  <>
-    <Nav categories={categories} />
-    {children}
-  </>
-)
+const Layout = ({ children, readings, seo }) => {
+  return (
+    <>
+      {/*<Nav readings={readings} />*/}
+      {children}
+    </>
+  )
+}
 
 export default Layout

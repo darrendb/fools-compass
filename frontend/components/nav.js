@@ -1,7 +1,9 @@
 import React from "react"
 import Link from "next/link"
 
-const Nav = ({ categories }) => {
+const Nav = ({ readings }) => {
+  console.log("Nav()")
+  console.log(readings)
   return (
     <div>
       <nav className="uk-navbar-container" data-uk-navbar>
@@ -9,18 +11,18 @@ const Nav = ({ categories }) => {
           <ul className="uk-navbar-nav">
             <li>
               <Link href="/">
-                <a>Strapi Blog</a>
+                <a>Home</a>
               </Link>
             </li>
           </ul>
         </div>
         <div className="uk-navbar-right">
           <ul className="uk-navbar-nav">
-            {categories.map((category) => {
+            {readings.map((reading) => {
               return (
-                <li key={category.id}>
-                  <Link as={`/category/${category.slug}`} href="/category/[id]">
-                    <a className="uk-link-reset">{category.name}</a>
+                <li key={reading.id}>
+                  <Link as={`/reading/${reading.slug}`} href="/reading/[id]">
+                    <a className="uk-link-reset">{reading.title}</a>
                   </Link>
                 </li>
               )

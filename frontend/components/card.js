@@ -2,20 +2,20 @@ import React from "react"
 import Link from "next/link"
 import NextImage from "./image"
 
-const Card = ({ article }) => {
+const Card = ({ reading }) => {
   return (
-    <Link as={`/article/${article.slug}`} href="/article/[id]">
+    <Link as={`/reading/${reading.slug}`} href="/reading/[id]">
       <a className="uk-link-reset">
         <div className="uk-card uk-card-muted">
           <div className="uk-card-media-top">
-            <NextImage image={article.image} />
+            <NextImage image={reading.image} />
           </div>
           <div className="uk-card-body">
             <p id="category" className="uk-text-uppercase">
-              {article.category.name}
+              Spread Type: {reading.spread.type}
             </p>
             <p id="title" className="uk-text-large">
-              {article.title}
+              Reading Title: {reading.title}
             </p>
           </div>
         </div>

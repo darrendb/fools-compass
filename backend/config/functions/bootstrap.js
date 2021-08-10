@@ -3,13 +3,17 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime-types");
+const seedDataFile = "bootstrap-data.json";
 const {
   categories,
   homepage,
   writers,
   articles,
   global,
-} = require("../../data/data.json");
+  readings,
+  spreads,
+  positions,
+} = require(`../../data/${seedDataFile}`);
 
 async function isFirstRun() {
   const pluginStore = strapi.store({
@@ -93,6 +97,54 @@ async function createEntry({ model, entry, files }) {
     console.log("model", entry, e);
   }
 }
+
+// readings
+async function importReadings() {
+  return Promise.all(
+    readings.map(async (reading) => {
+      const files = {
+        picture: getFileData(`${reading.image.url}`),
+      };
+      return createEntry({
+        model: "reading",
+        entry: reading,
+        files,
+      });
+    })
+  );
+}
+// spreads
+async function importSpreads() {
+  return Promise.all(
+    spreads.map(async (spread) => {
+      const files = {
+        picture: getFileData(`${spread.image.url}`),
+      };
+      return createEntry({
+        model: "spread",
+        entry: spread,
+        files,
+      });
+    })
+  );
+}
+// positions
+async function importPositions() {
+  return Promise.all(
+    positions.map(async (position) => {
+      const files = {
+        picture: getFileData(`${position.image.url}`),
+      };
+      return createEntry({
+        model: "position",
+        entry: position,
+        files,
+      });
+    })
+  );
+}
+
+
 
 async function importCategories() {
   return Promise.all(
@@ -186,6 +238,9 @@ async function importSeedData() {
     article: ["find", "findone"],
     category: ["find", "findone"],
     writer: ["find", "findone"],
+    reading: ["find", "findone"],
+    spread: ["find", "findone"],
+    position: ["find", "findone"],
   });
 
   // Create all entries
@@ -194,18 +249,22 @@ async function importSeedData() {
   await importWriters();
   await importArticles();
   await importGlobal();
+  await importReadings();
+  await importSpreads();
+  await importPositions();
 }
 
 module.exports = async () => {
   const shouldImportSeedData = await isFirstRun();
 
   if (shouldImportSeedData) {
+    console.log("Bootstrapping Data...")
     try {
-      console.log("Setting up the template...");
+      console.log("  Setting up the template...");
       await importSeedData();
-      console.log("Ready to go");
+      console.log("  Ready to go!");
     } catch (error) {
-      console.log("Could not import seed data");
+      console.log("  Could not import seed data.");
       console.error(error);
     }
   }

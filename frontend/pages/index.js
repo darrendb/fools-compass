@@ -1,17 +1,19 @@
 import React from "react"
 import Articles from "../components/articles"
+import Readings from "../components/readings"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { fetchAPI } from "../lib/api"
 
-const Home = ({ articles, categories, homepage }) => {
+const Home = ({ homepage, readings, articles, categories }) => {
   return (
-    <Layout categories={categories}>
+    <Layout readings={readings} categories={categories}>
       <Seo seo={homepage.seo} />
       <div className="uk-section">
         <div className="uk-container uk-container-large">
           <h1>{homepage.hero.title}</h1>
-          <Articles articles={articles} />
+          <Readings readings={readings} />
+          {/*<Articles articles={articles} />*/}
         </div>
       </div>
     </Layout>
@@ -20,14 +22,15 @@ const Home = ({ articles, categories, homepage }) => {
 
 export async function getStaticProps() {
   // Run API calls in parallel
-  const [articles, categories, homepage] = await Promise.all([
+  const [homepage, readings, articles, categories] = await Promise.all([
+    fetchAPI("/homepage"),
+    fetchAPI("/readings"),
     fetchAPI("/articles"),
     fetchAPI("/categories"),
-    fetchAPI("/homepage"),
   ])
 
   return {
-    props: { articles, categories, homepage },
+    props: { homepage, readings, articles, categories },
     revalidate: 1,
   }
 }
