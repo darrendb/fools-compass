@@ -40,8 +40,6 @@
   },
   "strapi": {
     "uuid": "94d3557c-dfc6-4baa-8227-5636f4515855",
-    "template": "https://github.com/strapi/strapi-template-blog",
-    "starter": "https://github.com/strapi/strapi-starter-next-blog"
   },
   "engines": {
     "node": "14.17.4",
