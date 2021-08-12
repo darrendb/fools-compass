@@ -1,4 +1,4 @@
 const strapi = require('strapi')
-console.log('index.js')
+console.log('src/index.js')
 console.log('  calling strapi().start()')
 strapi(/* {...} */).start()

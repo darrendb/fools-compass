@@ -1,5 +1,5 @@
-# FoolsCompass Backend
-## Built with Strapi
+# FoolsCompass Frontend
+## Built with .Next JS
 
 2021-08-09-1
 Release Notes
