@@ -2,5 +2,5 @@ echo "build.sh"
 
 echo "-- running ./backend/npm run start"
 cd ./backend
-#npm run start
-npm install
+#npm install
+npm run start
