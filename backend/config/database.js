@@ -19,6 +19,9 @@ module.exports = ({env}) => {
           options: {
             ssl: true,
             useNullAsDefault: true,
+            ialectOptions: {
+              ssl: true
+            }
           },
         },
       },
