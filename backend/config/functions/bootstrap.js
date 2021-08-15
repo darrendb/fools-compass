@@ -1,4 +1,5 @@
 "use strict";
+console.log('bootstrap.js');
 
 const fs = require("fs");
 const path = require("path");
@@ -16,6 +17,7 @@ const {
 } = require(`../../data/${seedDataFile}`);
 
 async function isFirstRun() {
+  console.log('--isFirstRun()');
   const pluginStore = strapi.store({
     environment: strapi.config.environment,
     type: "type",
@@ -23,10 +25,13 @@ async function isFirstRun() {
   });
   const initHasRun = await pluginStore.get({ key: "initHasRun" });
   await pluginStore.set({ key: "initHasRun", value: true });
-  return !initHasRun;
+  const rv = !initHasRun;
+  console.log(`--rv: ${rv}`);
+  return rv;
 }
 
 async function setPublicPermissions(newPermissions) {
+  console.log('setPublicPermissions()');
   // Find the ID of the public role
   const publicRole = await strapi
     .query("role", "users-permissions")
@@ -69,6 +74,7 @@ function getFileSizeInBytes(filePath) {
 }
 
 function getFileData(fileName) {
+  console.log('getFileData()');
   const filePath = `./data/uploads/${fileName}`;
 
   // Parse the file metadata
@@ -86,6 +92,7 @@ function getFileData(fileName) {
 
 // Create an entry and attach files if there are any
 async function createEntry({ model, entry, files }) {
+  console.log('createEntry()');
   try {
     const createdEntry = await strapi.query(model).create(entry);
     if (files) {
@@ -100,6 +107,7 @@ async function createEntry({ model, entry, files }) {
 
 // readings
 async function importReadings() {
+  console.log('importReadings()');
   return Promise.all(
     readings.map(async (reading) => {
       const files = {
@@ -115,6 +123,7 @@ async function importReadings() {
 }
 // spreads
 async function importSpreads() {
+  console.log('importSpreads()');
   return Promise.all(
     spreads.map(async (spread) => {
       const files = {
@@ -130,6 +139,7 @@ async function importSpreads() {
 }
 // positions
 async function importPositions() {
+  console.log('importPositions()');
   return Promise.all(
     positions.map(async (position) => {
       const files = {
@@ -155,6 +165,7 @@ async function importCategories() {
 }
 
 async function importHomepage() {
+  console.log('importHomepage()');
   const files = {
     "seo.shareImage": getFileData("default-image.png"),
   };
@@ -178,6 +189,7 @@ async function importWriters() {
 
 // Randomly set relations on Article to avoid error with MongoDB
 function getEntryWithRelations(article, categories, authors) {
+  console.log('getEntryWithRelations()');
   const isMongoose = strapi.config.connections.default.connector == "mongoose";
 
   if (isMongoose) {
@@ -223,6 +235,7 @@ async function importArticles() {
 }
 
 async function importGlobal() {
+  console.log('importGlobal()');
   const files = {
     favicon: getFileData("favicon.png"),
     "defaultSeo.shareImage": getFileData("default-image.png"),
@@ -231,6 +244,7 @@ async function importGlobal() {
 }
 
 async function importSeedData() {
+  console.log('importSeedData()');
   // Allow read of application content types
   await setPublicPermissions({
     global: ["find"],
@@ -255,16 +269,18 @@ async function importSeedData() {
 }
 
 module.exports = async () => {
+  console.log("--async()");
   const shouldImportSeedData = await isFirstRun();
+  console.log(`----shouldImportSeedData: ${shouldImportSeedData}`);
 
   if (shouldImportSeedData) {
     console.log("Bootstrapping Data...")
     try {
-      console.log("  Setting up the template...");
+      console.log("--Setting up the template...");
       await importSeedData();
-      console.log("  Ready to go!");
+      console.log("--Ready to go!");
     } catch (error) {
-      console.log("  Could not import seed data.");
+      console.log("--Could not import seed data.");
       console.error(error);
     }
   }
