@@ -1,5 +1,5 @@
-const parse = require('pg-connection-string').parse;
 console.log("config/database.js");
+const parse = require('pg-connection-string').parse;
 // console.log(`--DATABASE_URL: ${process.env.DATABASE_URL}`);
 module.exports = ({env}) => {
   console.log(`--NODE_ENV: ${env('NODE_ENV')}`);
@@ -14,17 +14,18 @@ module.exports = ({env}) => {
           connector: 'bookshelf',
           settings: {
             client: 'postgres',
-            host: config.host,
-            port: config.port,
-            database: config.database,
-            username: config.user,
-            password: config.password,
+            host: config.host || 'localhost',
+            port: config.port || 5432,
+            database: config.database || 'strapi',
+            username: config.user || 'strapi',
+            password: config.password || 'strapi',
             ssl: {
-              rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+              rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false)
             }
           },
           options: {
-            ssl: true
+            ssl: true,
+            debug: true
           }
         }
       }
