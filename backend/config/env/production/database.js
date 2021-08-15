@@ -19,7 +19,7 @@ module.exports = ({env}) => {
           options: {
             ssl: true,
             useNullAsDefault: true,
-            ialectOptions: {
+            dialectOptions: {
               ssl: true
             }
           },
