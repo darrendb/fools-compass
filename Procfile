@@ -1,1 +1,2 @@
-web: ./build.sh
+release: ./build.sh
+web: yarn --cwd frontend start

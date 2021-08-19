@@ -1,6 +1,8 @@
-echo "build.sh"
+echo "./build.sh"
 
-echo "-- running ./backend/npm run start"
 cd ./backend
+pwd
+echo "-- running npm run build && npm run start on the backend"
 #npm install
-npm run start
+npm run build && npm run start
+#npm run start

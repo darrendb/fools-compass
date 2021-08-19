@@ -9,7 +9,13 @@
     "diary",
     "journal"
   ],
-  "scripts": {},
+  "scripts": {
+    "build": "echo build script... && yarn --cwd frontend start",
+    "deploy": "echo deploy script... && cp -a client/build/. public/",
+    "heroku-prebuild": "echo heroku-prebuild script...",
+    "heroku-postbuild": "echo heroku-postbuild... && yarn build",
+    "heroku-cleanup": "echo heroku-cleanup script..."
+  },
   "devDependencies": {
     "cross-env": "7.0.3",
     "npm-run-all": "^4.1.5",
@@ -31,12 +37,14 @@
     "strapi-plugin-upload": "3.6.6",
     "strapi-plugin-users-permissions": "3.6.6",
     "strapi-provider-upload-aws-s3": "3.6.6",
-    "strapi-utils": "3.6.6"
+    "strapi-utils": "3.6.6",
+    "yarn": "^1.22.11"
   },
   "author": "jrb-ddb",
   "license": "MIT",
   "engines": {
     "node": "14.17.4",
-    "npm": "6.14.14"
+    "npm": "6.14.14",
+    "yarn": "1.22.11"
   }
 }
